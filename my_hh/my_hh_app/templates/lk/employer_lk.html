@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+{% if cure_user_status == "employer" %}
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">
+    Получить "ПРО" подписку
+  </button>
+</form>
+{% endif %}
+<h3>Информация о компании:</h3><br>
+{{company_info.company_name}}<br>
+{{company_info.foundation_data}}<br>
+{{company_info.industry}}<br>
+{{company_info.strategy_description}}<br>
+<button type="submit"><a href="{{company_info.id}}/change_company_info">Изменить информацию о своей компании</a></button>
+<h3>Отклики на мои вакансии</h3>
+
+<h3>Мои вакансии</h3>
+<button><a href="send_vacation">Добавить вакансию</a></button>
+{% endblock %}
+</body>
+</html>

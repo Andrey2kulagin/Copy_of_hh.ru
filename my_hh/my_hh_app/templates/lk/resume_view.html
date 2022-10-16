@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+{{resume.id}}<br>
+{{resume.name}}<br>
+{{resume.gender}}<br>
+{{resume.phone}}<br>
+{{resume.age}}<br>
+{{resume.spec}}<br>
+{{resume.type_of_employment}}<br>
+{{resume.adres}}<br>
+{{resume.experience}}<br>
+{{resume.skills.all}}
+{% for skill in resume.skills.all%}
+{{skill}}
+{% endfor %}<br>
+{{resume.salary}}<br>
+<button><a href="http://127.0.0.1:8000/lk/{{resume.id}}/update"> Внести изменения</a></button>
+{%endblock%}
+</body>
+</html>Title

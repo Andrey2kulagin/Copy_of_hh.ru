@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{form.name}}
+  {{form.gender}}
+  {{form.phone}}
+  {{form.age}}
+  {{form.spec}}
+  {{form.type_of_employment}}
+  {{form.adres}}
+  {{form.experience}}
+  {{form.skills}}
+    <button><a href="http://127.0.0.1:8000/add/skills">Добавить навыки</a></button>
+  {{form.salary}}
+
+  <button type="submit">Получить работу мечты</button>
+</form>
+user
+{{user}}
+{% endblock %}
+</body>
+</html>

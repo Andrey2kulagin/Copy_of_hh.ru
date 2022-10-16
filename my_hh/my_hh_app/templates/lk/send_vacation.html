@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{VacanciesForm.title}}
+    {{VacanciesForm.location}}
+    {{VacanciesForm.skills}}
+    <button><a href="http://127.0.0.1:8000/add/skills"> Добавить скилы</a></button>
+    {{VacanciesForm.salary}}
+    <button type="submit"> Отправить вакансию </button>
+</form>
+{{skills_ids1}}
+{% for el in skills_ids %}
+{{el}}
+{%endfor%}
+{% endblock %}
+</body>
+</html>

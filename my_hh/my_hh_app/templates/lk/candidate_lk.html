@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+<h1> LK </h1>
+
+<button> <a href="http://127.0.0.1:8000/send_resume">Добавить резюме</a></button>
+<h1>Мои резюме</h1>
+{% for el in resume %}
+
+<a href="resume_view/{{el.id}}">{{el.spec}}</a><br>
+{% endfor %}
+
+<button> <a href="">Внести изменения в резюме</a></button>
+{% endblock %}
+</body>
+</html>

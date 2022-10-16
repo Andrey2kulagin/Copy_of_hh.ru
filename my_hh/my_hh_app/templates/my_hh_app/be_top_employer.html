@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+{{resume.id}}<br>
+{{resume.name}}<br>
+{{resume.gender}}<br>
+<h1>Чтобы увидеть контакты соискателя оформите подписку "ПРО" в личном кабинете  <button><a href="/lk"> Перейти в личный кабинет</a></button></h1><br>
+{{resume.age}}<br>
+{{resume.spec}}<br>
+{{resume.type_of_employment}}<br>
+{{resume.adres}}<br>
+{{resume.experience}}<br>
+{% for skill in resume.skills.all%}
+{{skill}}
+{% endfor %}<br>
+{{resume.salary}}<br>
+<br>
+<br>
+{{status}}
+</body>
+{% endblock %}
+</html>

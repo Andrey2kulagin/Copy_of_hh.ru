@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{post}}
+<form method="post">
+    {{user}}
+    {% csrf_token %}
+    {{form}}
+    {% if is_valid == False %}
+    <br><h3>Проверьте соответствие введенных данных критериям</h3>
+    {% endif %}
+    <br>
+    <button type="submit">Зарегистрироваться </button>
+</form>
+{{req}}
+<br>
+
+</body>
+</html>

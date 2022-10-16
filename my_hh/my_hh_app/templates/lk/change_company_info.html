@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+<form method="post">
+    <button><a href="exit/"> Выйти из учетной записи</a></button>
+  {% csrf_token %}
+  {% for el in form %}
+  {{el}}<br>
+  {% endfor %}
+  <button type="submit">Изменить данные</button>
+</form>
+{%endblock %}
+</body>
+</html>
