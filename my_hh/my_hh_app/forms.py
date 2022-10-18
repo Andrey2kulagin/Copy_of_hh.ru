@@ -1,4 +1,4 @@
-from .models import Resume, UserStatus, Skills, ResponsesVacancy
+from .models import Resume, UserStatus, Skills, ResponsesVacancy, Question, Profile, Answer
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -74,3 +74,18 @@ class ResponsesForm(forms.ModelForm):
     class Meta:
         model = ResponsesVacancy
         fields = ["cover_letter", ]
+
+
+class QuestionForm(forms.Form):
+    def __init__(self, name, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        profile_id = Profile.objects.get(name = name)
+        question_id = Question.objects.filter(profile_id=profile_id)
+        for i in question_id:
+            cure = Answer.objects.filter(question_id=i.id)
+            choices = []
+            for j in cure:
+                choices.append((str(j.id), str(j.text)))
+            self.fields[i.text] = forms.ChoiceField(
+                choices=choices)
+
