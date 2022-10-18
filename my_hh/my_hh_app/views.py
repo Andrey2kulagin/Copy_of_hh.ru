@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Resume, UserStatus, Companies, Vacancies, Skills, Question, Answer, Profile
-from .forms import ResumeForm, UserRegistrationForm, RegistrationForm, UserStatusForm, SkillsForm, ResponsesForm, \
-    QuestionForm
+from .forms import ResumeForm, UserRegistrationForm, RegistrationForm, UserStatusForm, SkillsForm, ResponsesForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 
 def index(request):
-    question_form = QuestionForm(name="Python")
-
     if request.method == "POST":
         resume = Resume.objects.filter(spec__contains=request.POST.get("title", ""))
     else:
@@ -16,7 +13,7 @@ def index(request):
     vacancies = Vacancies.objects.all()
     skills = Skills.objects.all()
 
-    context = {"resume": resume, "vacancy": vacancies, "skills": skills, "question_form": question_form}
+    context = {"resume": resume, "vacancy": vacancies, "skills": skills}
     return render(request, "my_hh_app/index.html", context)
 
 

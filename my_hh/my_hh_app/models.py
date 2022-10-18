@@ -1,13 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
-#from django.conf import settings
+# from django.conf import settings
 from django.contrib import admin
 
 
 class Skills(models.Model):
     skill = models.CharField("skill", max_length=200)
-    is_checked = models.BooleanField("is_checked", null=True)
+    is_checked = models.BooleanField("is_checked", default="False")
+
+    def __str__(self):
+        return self.skill
 
 
 class Resume(models.Model):
@@ -18,7 +21,7 @@ class Resume(models.Model):
     experience = models.TextField("experience")
     option = (("full-time", "full-time"), ("part-time", "part-time"))
     type_of_employment = models.CharField("type_of_employment", max_length=200, choices=option)
-    skills = models.ForeignKey(Skills, on_delete=models.SET_NULL, null=True)
+    skills = models.ManyToManyField(Skills)
     age = models.CharField("age", max_length=3)
     phone = models.CharField("phone", max_length=20)
     salary = models.CharField("salary", max_length=200)
@@ -43,7 +46,7 @@ class Vacancies(models.Model):
     title = models.CharField("Title", max_length=200)
     location = models.CharField("Location", max_length=200)
     salary = models.CharField("salary", max_length=200)
-    skills = models.ForeignKey(Skills, on_delete=models.SET_NULL, null=True)
+    skills = models.ManyToManyField(Skills)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     company_name = models.ForeignKey(Companies, on_delete=models.SET_NULL, null=True)
 
@@ -56,7 +59,7 @@ class ResponsesVacancy(models.Model):
 
 
 class Profile(models.Model):
-    name = models.CharField(max_length=200, verbose_name='Название теста')
+    name = models.ForeignKey(Skills, verbose_name='Название теста', on_delete=models.SET_NULL, null=True)
     work_time = models.IntegerField(verbose_name='Время выполнения (мин)')
     questions_count = models.IntegerField(verbose_name='Количество вопросов')
     satisfactory = models.IntegerField(verbose_name='Удовлетворительно')
@@ -68,7 +71,7 @@ class Profile(models.Model):
         verbose_name_plural = 'Тесты'
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Question(models.Model):
@@ -123,3 +126,11 @@ class ResultAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+
+class UserCheckedSkills(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    skills_id = models.ManyToManyField(Skills)
+
+    def __str__(self):
+        return f"{self.user} skills"

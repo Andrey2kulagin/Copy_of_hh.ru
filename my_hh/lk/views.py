@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.apps import apps
-from .forms import VacanciesForm
-from django.urls import reverse
+from .forms import VacanciesForm, TestForm
 from django.views.generic import UpdateView
 
 Resume = apps.get_model('my_hh_app', 'Resume')
@@ -11,6 +10,10 @@ Companies = apps.get_model('my_hh_app', 'Companies')
 Vacancies = apps.get_model('my_hh_app', 'Vacancies')
 Skills = apps.get_model('my_hh_app', 'Skills')
 ResponsesVacancy = apps.get_model('my_hh_app', 'ResponsesVacancy')
+UserCheckedSkills = apps.get_model('my_hh_app', 'UserCheckedSkills')
+Answer = apps.get_model('my_hh_app', 'Answer')
+Profile = apps.get_model('my_hh_app', 'Profile')
+Question = apps.get_model('my_hh_app', 'Question')
 
 
 @login_required
@@ -26,6 +29,11 @@ def lk(request):
         user_status.status = "top_employer"
         user_status.save()
     if cure_user_status == "candidate":
+        checked_skills = UserCheckedSkills.objects.filter(user=user)
+        if len(checked_skills) == 0:
+            context["checked_skills"] = "0"
+        else:
+            context["checked_skills"] = checked_skills
         return render(request, "lk/candidate_lk.html", context)
     elif cure_user_status == "employer" or cure_user_status == "top_employer":
         company_info = Companies.objects.get(author=cure_user, )
@@ -83,3 +91,32 @@ def send_vacation(request):
     form = VacanciesForm()
     context = {"VacanciesForm": form, }
     return render(request, "lk/send_vacation.html", context)
+
+
+def skills_for_check(request):
+    user = request.user
+    all_skills = [x.skill for x in Skills.objects.filter(is_checked=True)]
+    checked_skills = UserCheckedSkills.objects.filter(user=user)
+    if len(checked_skills) > 0:
+        checked_skills = [x.skill for x in UserCheckedSkills.objects.get(user=user).skills_id.all()]
+    skills_without_checked = [x for x in all_skills if x not in checked_skills]
+    if len(skills_without_checked) == 0:
+        skills_without_checked = "0"
+    context = {"skills_without_checked": skills_without_checked,
+               "a": all_skills,
+               "b": checked_skills}
+    return render(request, "lk/skills_for_check.html", context)
+
+
+def check_skill(request, name):
+    post = 1
+    skills_object = Skills.objects.get(skill=name)
+    if request.method == "POST":
+        number_of_points = 0
+        post = request.POST
+        # ЗАДАЧА - ПОСЧИТАТЬ КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ
+
+
+    test_form = TestForm(name=skills_object)
+    context = {"test_form": test_form, "post": post}
+    return render(request, "lk/check_skill.html", context)

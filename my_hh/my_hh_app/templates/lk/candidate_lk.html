@@ -19,7 +19,16 @@
 <button> <a href="">Внести изменения в резюме</a></button>
 
 <h1>Мои подтверждённые навыки</h1>
-
+{% if checked_skills == "0" %}
+<h3>У вас пока нет подтверждённых навыков</h3>
+{% else %}
+{% for el in checked_skills %}
+{% for el1 in el.skills_id.all %}
+<h5>el1</h5>
+{% endfor %}
+{% endfor %}
+{%endif %}
+<button><a href="skills_for_check">Подтвердить навыки</a></button>
 {% endblock %}
 </body>
 </html>

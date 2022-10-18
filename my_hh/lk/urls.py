@@ -7,4 +7,6 @@ urlpatterns = [
     path('<int:pk>/update', views.NewUpdateView.as_view()),
     path('<int:pk>/change_company_info', views.CompanyUpdate.as_view()),
     path('send_vacation', views.send_vacation),
+    path('skills_for_check', views.skills_for_check),
+    path('check_skill/<str:name>', views.check_skill),
 ]
