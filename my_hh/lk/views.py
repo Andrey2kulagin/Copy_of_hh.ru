@@ -58,6 +58,7 @@ class NewUpdateView(UpdateView):
               "age",
               "spec",
               "type_of_employment",
+              "UserCheckedSkills",
               "adres",
               "experience",
               "skills",
@@ -108,15 +109,59 @@ def skills_for_check(request):
     return render(request, "lk/skills_for_check.html", context)
 
 
+def get_right_ids(skills_object):
+    right_ids = []
+    profile = Profile.objects.get(name=skills_object)
+    questions = Question.objects.filter(profile_id=profile)
+    for question in questions:
+        answers = Answer.objects.filter(question_id=question)
+        for answer in answers:
+            if answer.is_right:
+                right_ids.append(answer.id)
+    return right_ids
+
+
+def get_cure_ids(post):
+    cure_ids = []
+    for answer in post:
+        if answer == "csrfmiddlewaretoken":
+            continue
+        cure_ids.append(int(post[answer]))
+    return cure_ids
+
+
+def get_right_answers(right_ids, cure_ids):
+    number_of_points = 0
+    if len(right_ids) == len(cure_ids):
+        for i in range(len(right_ids)):
+            if right_ids[i] == cure_ids[i]:
+                number_of_points += 1
+        return number_of_points
+    raise Exception("Что-то пошло не так в системе подсчёта результатов")
+
+
 def check_skill(request, name):
     post = 1
     skills_object = Skills.objects.get(skill=name)
     if request.method == "POST":
         number_of_points = 0
         post = request.POST
-        # ЗАДАЧА - ПОСЧИТАТЬ КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ
-
+        right_ids = get_right_ids(skills_object)
+        cure_ids = get_cure_ids(post)
+        number_of_points = get_right_answers(right_ids, cure_ids)
+        minimal_level = Profile.objects.get(name=skills_object).good
+        if number_of_points >= minimal_level:
+            checked_skills = UserCheckedSkills.objects.filter(user=request.user)
+            if len(checked_skills) > 0:
+                checked_skills = UserCheckedSkills.objects.get(user=request.user)
+                checked_skills.skills_id.add(skills_object)
+                checked_skills.save()
+            else:
+                checked_skills = UserCheckedSkills()
+                checked_skills.user = request.user
+                checked_skills.skills_id = skills_object
+                checked_skills.save()
 
     test_form = TestForm(name=skills_object)
-    context = {"test_form": test_form, "post": post}
+    context = {"test_form": test_form, "post": post, }
     return render(request, "lk/check_skill.html", context)

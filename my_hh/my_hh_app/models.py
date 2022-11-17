@@ -13,7 +13,14 @@ class Skills(models.Model):
         return self.skill
 
 
+class UserCheckedSkills(models.Model):
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    skills_id = models.ManyToManyField(Skills)
+    def __str__(self):
+        return f"{self.user} skills"
+
 class Resume(models.Model):
+
     name = models.CharField("name", max_length=200)
     option = (("male", "Мужской"), ("female", "Женский"))
     gender = models.CharField("gender", max_length=200, choices=option)
@@ -128,9 +135,4 @@ class ResultAdmin(admin.ModelAdmin):
         return False
 
 
-class UserCheckedSkills(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    skills_id = models.ManyToManyField(Skills)
 
-    def __str__(self):
-        return f"{self.user} skills"
