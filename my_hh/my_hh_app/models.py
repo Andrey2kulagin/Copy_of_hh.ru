@@ -20,7 +20,6 @@ class UserCheckedSkills(models.Model):
         return f"{self.user} skills"
 
 class Resume(models.Model):
-
     name = models.CharField("name", max_length=200)
     option = (("male", "Мужской"), ("female", "Женский"))
     gender = models.CharField("gender", max_length=200, choices=option)
@@ -56,6 +55,9 @@ class Vacancies(models.Model):
     skills = models.ManyToManyField(Skills)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     company_name = models.ForeignKey(Companies, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 class ResponsesVacancy(models.Model):

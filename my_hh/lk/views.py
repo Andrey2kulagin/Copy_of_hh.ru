@@ -23,7 +23,7 @@ def lk(request):
     resume = Resume.objects.all()
     user = request.user
     author_resume = Resume.objects.filter(author=user)
-    context = {"resume": resume, "author_resume": author_resume, }
+    context = {"resume": resume, "author_resume": author_resume, "cure_user_status": cure_user_status}
     if request.method == "POST":
         user_status = UserStatus.objects.get(user=cure_user)
         user_status.status = "top_employer"
