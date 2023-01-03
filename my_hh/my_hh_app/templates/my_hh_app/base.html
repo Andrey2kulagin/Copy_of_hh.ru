@@ -5,16 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-
+<div>
 {{request.user}}
+
 <button><a href="http://127.0.0.1:8000/">Домашняя страница</a></button>
 {% if request.user.is_authenticated == False %}
 <button><a href="http://127.0.0.1:8000/accounts/login">Войти</a></button>
 {% else %}
 <button><a href="http://127.0.0.1:8000/lk">Личный кабинет</a></button>
 <button><a href="http://127.0.0.1:8000/exit">Выход</a></button>
-
 {% endif %}
+    </div>
 {% block content %}
 {%endblock%}
 </body>
