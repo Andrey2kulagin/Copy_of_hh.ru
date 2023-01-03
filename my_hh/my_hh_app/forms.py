@@ -1,4 +1,4 @@
-from .models import Resume, UserStatus, Skills, ResponsesVacancy
+from .models import Resume, UserStatus, Skills, ResponsesVacancy, Question, Profile, Answer
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -74,3 +74,7 @@ class ResponsesForm(forms.ModelForm):
     class Meta:
         model = ResponsesVacancy
         fields = ["cover_letter", ]
+
+
+
+

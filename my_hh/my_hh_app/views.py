@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Resume, UserStatus, Companies, Vacancies, Skills
+from .models import Resume, UserStatus, Companies, Vacancies, Skills, UserCheckedSkills
 from .forms import ResumeForm, UserRegistrationForm, RegistrationForm, UserStatusForm, SkillsForm, ResponsesForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -26,7 +26,7 @@ def send_resume(request):
         new_post.save()
         form.save_m2m()
     form = ResumeForm()
-    context = {"form": form,"user": request.user }
+    context = {"form": form, "user": request.user}
     return render(request, "my_hh_app/send_resume.html", context)
 
 
@@ -53,6 +53,10 @@ def registrations(request, int_status):
                 company = Companies(company_name=post.__getitem__("username"))
                 company.author = User.objects.get(username=post.__getitem__("username"))
                 company.save()
+            if int_status == 1:
+                checked_skill = UserCheckedSkills()
+                checked_skill.user = User.objects.get(username=post.__getitem__("username"))
+                checked_skill.save()
             return_path = "http://127.0.0.1:8000/"
             return redirect(return_path)
         else:
@@ -65,7 +69,8 @@ def registrations(request, int_status):
 @login_required
 def resume_view(request, pk):
     resume = Resume.objects.get(id=pk)
-    context = {"resume": resume, }
+    checked_skills = UserCheckedSkills.objects.get(user=resume.author)
+    context = {"resume": resume, "checked_skills": checked_skills}
     cure_user = request.user
     cure_user_status = UserStatus.objects.get(user=cure_user).status
     if cure_user_status == "candidate":

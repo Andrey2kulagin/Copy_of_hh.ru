@@ -1,11 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+# from django.conf import settings
+from django.contrib import admin
+
 
 class Skills(models.Model):
     skill = models.CharField("skill", max_length=200)
-    is_checked = models.BooleanField("is_checked", null=True)
+    is_checked = models.BooleanField("is_checked", default="False")
 
+    def __str__(self):
+        return self.skill
+
+
+class UserCheckedSkills(models.Model):
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    skills_id = models.ManyToManyField(Skills)
+    def __str__(self):
+        return f"{self.user} skills"
 
 class Resume(models.Model):
     name = models.CharField("name", max_length=200)
@@ -15,7 +27,7 @@ class Resume(models.Model):
     experience = models.TextField("experience")
     option = (("full-time", "full-time"), ("part-time", "part-time"))
     type_of_employment = models.CharField("type_of_employment", max_length=200, choices=option)
-    skills = models.ForeignKey(Skills, on_delete=models.SET_NULL, null=True)
+    skills = models.ManyToManyField(Skills)
     age = models.CharField("age", max_length=3)
     phone = models.CharField("phone", max_length=20)
     salary = models.CharField("salary", max_length=200)
@@ -26,7 +38,6 @@ class Resume(models.Model):
 class UserStatus(models.Model):
     user = models.CharField("user", max_length=200)
     status = models.CharField("status", max_length=200)
-
 
 
 class Companies(models.Model):
@@ -41,10 +52,12 @@ class Vacancies(models.Model):
     title = models.CharField("Title", max_length=200)
     location = models.CharField("Location", max_length=200)
     salary = models.CharField("salary", max_length=200)
-    skills = models.ForeignKey(Skills, on_delete=models.SET_NULL, null=True)
+    skills = models.ManyToManyField(Skills)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     company_name = models.ForeignKey(Companies, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.title
 
 
 class ResponsesVacancy(models.Model):
@@ -52,4 +65,76 @@ class ResponsesVacancy(models.Model):
     cover_letter = models.TextField("Cover_letter")
     resume_id = models.ForeignKey(Resume, on_delete=models.SET_NULL, null=True)
     author_vacancy_name = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+
+class Profile(models.Model):
+    name = models.ForeignKey(Skills, verbose_name='Название теста', on_delete=models.SET_NULL, null=True)
+    work_time = models.IntegerField(verbose_name='Время выполнения (мин)')
+    questions_count = models.IntegerField(verbose_name='Количество вопросов')
+    satisfactory = models.IntegerField(verbose_name='Удовлетворительно')
+    good = models.IntegerField(verbose_name='Хорошо')
+    perfect = models.IntegerField(verbose_name='Отлично')
+
+    class Meta:
+        verbose_name = 'Тесты'
+        verbose_name_plural = 'Тесты'
+
+    def __str__(self):
+        return str(self.name)
+
+
+class Question(models.Model):
+    profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Тест')
+    text = models.TextField(verbose_name='Текст вопроса')
+    weight = models.FloatField(default=1, verbose_name='Вес')
+
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
+
+    def __str__(self):
+        return self.text
+
+
+class Answer(models.Model):
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.CharField(max_length=300)
+    is_right = models.BooleanField()
+
+    class Meta:
+        verbose_name = 'Вариант ответа'
+        verbose_name_plural = 'Варианты ответа'
+
+    def __str__(self):
+        return self.text
+
+
+class Result(models.Model):
+    profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Тест')
+    user_name = models.CharField(max_length=300, verbose_name="ФИО")
+    date_time = models.DateTimeField(auto_now_add=True, blank=True, verbose_name="Время завершения")
+    rating = models.FloatField(verbose_name="Проценты")
+
+    class Meta:
+        verbose_name = 'Результат'
+        verbose_name_plural = 'Результаты'
+
+
+class QuestionsInline(admin.TabularInline):
+    model = Answer
+
+
+@admin.register(Question)
+class BookAdmin(admin.ModelAdmin):
+    inlines = [QuestionsInline]
+
+
+@admin.register(Result)
+class ResultAdmin(admin.ModelAdmin):
+    list_display = ("profile_id", "date_time", "user_name", "rating")
+
+    def has_add_permission(self, request):
+        return False
+
+
 

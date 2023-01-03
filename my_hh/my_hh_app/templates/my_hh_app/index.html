@@ -1,43 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My_study</title>
+  <link rel="stylesheet" href="{% static 'my_hh_app/css/normalize.min.css' %}">
+  <link rel="stylesheet" href="{% static 'my_hh_app/css/style.css' %}">
 </head>
+
 <body>
-{% extends 'my_hh_app/base.html' %}
-{% block content %}
-<br>
+  <header>
+    <nav class="header__nav">
+      <a class="header__link" href="#">username</a>
+      <a class="logo"><img src="{% static 'my_hh_app/images/Checkr.svg' %}"></a>
+      <a class="header__link" href=""> выход</a>
+    </nav>
+  </header>
 
-<h1>Список резюме</h1>
-<form method="post" id="1">
-    {% csrf_token %}
-    <h3>Поиск по специальности: <input name="title"></h3>
-    <button type="submit">Найти</button>
+  <section>
+    <div class="vacancies__header">Вакансии </div>
+    <div class="search__div">
+      <input class="vacancies__search" type="search" placeholder="Поиск по специальности">
+    </div>
+    <div class="vacancies__card">
+      <div class="vacancies__card__div__1">
+        <a class="vacancy__name" href="#">Java developer</a>
+        <a class="company__name" href="#"> ООО рога и копыта</a>
+      </div>
+      <div class="vacancies__card__div__2">
 
-</form>
-{% for i in resume %}
-<li><a href="resume_view/{{i.id}}">Имя: {{i.name}}
-    Возраст: {{i.age}}
-    Специальность: {{i.spec}}</a></li>
-{% endfor %}
+        <span class="vacancies__city">Москва</span>
+      </div>
+      <div class="vacancies__card__div__3">
+        <button class="clear__button" type="submit">
+          <div class="respond__btn">Откликнуться</div>
+        </button>
+        <span class="salary">Оплата: 3000$</span>
+      </div>
+    </div>
 
-<button type="button"><a href="/send_resume">Оставить Резюме</a></button>
+  </section>
 
-<h1>Список вакансий</h1>
-{% for el in vacancy %}
-<a href="/vacancy_view/{{el.id}}">
-    {{el.title}}
-    {{el.location}}
-    {% for i in el.skills.all %}
-    {{i}}
-    {%endfor %}
-    {{el.salary}}
-    <br>
-    {% endfor %}
-</a>
+  <section class="resumes">
+    <div class="vacancies__header">Резюме </div>
+    <div class="search__div">
+      <input class="vacancies__search" type="search" placeholder="Поиск по специальности">
+    </div>
+    <div class="vacancies__card">
+      <div class="vacancies__card__div__1">
+        <a class="vacancy__name" href="#">Java developer</a>
+        <a class="company__name" href="#"> Опыт работы: 3 года</a>
+      </div>
+      <div class="vacancies__card__div__2">
 
+        <span class="vacancies__city">Москва</span>
+      </div>
+      <div class="vacancies__card__div__3">
+        <a href="#" class="contact__button" type="submit">
+          <div class="respond__btn">Получить контакты</div>
+        </a>
+        <span class="salary">Ожидания по оплате: 3000$</span>
+      </div>
+    </div>
 
-{% endblock %}
+    <div class="vacancies__card">
+      <div class="vacancies__card__div__1">
+        <a class="vacancy__name" href="#">Java developer</a>
+        <a class="company__name" href="#"> Опыт работы: 3 года</a>
+      </div>
+      <div class="vacancies__card__div__2">
+
+        <span class="vacancies__city">Москва</span>
+      </div>
+      <div class="vacancies__card__div__3">
+        <a href="#" class="contact__button" type="submit">
+          <div class="respond__btn">Получить контакты</div>
+        </a>
+        <span class="salary">Ожидания по оплате: 3000$</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+
+    <ul class="our__contacts_ul">Наши контакты:
+      <li class="our__phone">89164722860</li>
+      <li class="our__tg">@andrey2ku</li>
+      </li>
+    </ul>
+
+    <ul class="our__links"> Наши соцсети:
+      <li class="is-linkedin"><a class="our__links__link"href="#" title="LinkedIn" target="_blank"
+          rel="noopener noreferrer"><span>LinkedIn</span></a></li>
+      <li class="is-facebook"><a class="our__links__link" href="#" title="Facebook" target="_blank"
+          rel="noopener noreferrer"> <span>Facebook</span></a></li>
+      <li class="is-twitter"><a class="our__links__link" href="#" title="Twitter" target="_blank"
+          rel="noopener noreferrer"> <span>Twitter</span></a></li>
+      <li class="is-youtube"><a class="our__links__link" href="#" title="YouTube"
+          target="_blank" rel="noopener noreferrer"> <span>YouTube</span></a></li>
+    </ul>
+  </footer>
 </body>
+
 </html>

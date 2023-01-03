@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    {{test_form}}
+    <button type="submit">Отправить на проверку</button>
+    <div> вот это {{post}}<br></div>
+    {{answer_object}}<br>
+    {{right_ids}}<br>
+    {{minimal_level}}
+    <div> вот это{{number_of_points}}</div>
+</form>
+</body>
+</html>

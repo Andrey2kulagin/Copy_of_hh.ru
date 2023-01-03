@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+<br>
+
+<h1>Список резюме</h1>
+<form method="post" id="1">
+    {% csrf_token %}
+    <h3>Поиск по специальности: <input name="title"></h3>
+    <button type="submit">Найти</button>
+
+</form>
+{% for i in resume %}
+<li><a href="resume_view/{{i.id}}">Имя: {{i.name}}
+    Возраст: {{i.age}}
+    Специальность: {{i.spec}}</a></li>
+{% endfor %}
+
+<button type="button"><a href="/send_resume">Оставить Резюме</a></button>
+
+<h1>Список вакансий</h1>
+{% for el in vacancy %}
+<a href="/vacancy_view/{{el.id}}">
+    {{el.title}}
+    {{el.location}}
+    {% for i in el.skills.all %}
+    {{i}}
+    {%endfor %}
+    {{el.salary}}
+    <br>
+    {% endfor %}
+</a>
+{{question_form}}
+
+
+{% endblock %}
+</body>
+</html>

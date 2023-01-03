@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+body{
+  margin-top: 0;
+  font-family: 'Ubuntu';
+}
+header{
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.header__nav{
+  height: 75px;
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__link{
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 400;
+  color: #009BB5;
+}
+.vacancies__header{
+  max-height: 65px;
+  min-height: 60px;
+  max-width: 1500px;
+  width: 100%;
+  background-color: #002853;
+  font-weight: 400;
+  font-size: 36px;
+  color: #fff;
+  padding-left: 130px;
+  padding-top: 10px;
+  margin: 0 auto;
+}
+
+.vacancies__search{
+  width: calc(100%);
+  height: 100%;
+  border: 3px solid #009BB5;
+  position: absolute;
+  outline: 0;
+  outline-offset: 0px;
+  background: url("../images/magnifier_icon-icons.svg") no-repeat 5px;
+  padding-left:38px;
+  
+}
+.search__icon{
+  padding-right: 0;
+  height: 35px;
+  width: 35px;
+  display: block;
+  position: absolute;
+}
+
+.search__div{
+  width: 675px;
+  height: 45px;
+  margin: 15px auto;
+  position: relative;
+  display: flex;
+}
+.vacancies__card{
+  padding-left: 30px;
+  margin: 20px auto;
+  width: 1230px;
+  height: 140px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 11px;
+}
+.vacancies__card__div__1{
+  position: relative;
+  width: 100%;
+  height: 33%;
+}
+.vacancy__name{
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  position: absolute;
+  display: flex;
+  top: 10px;
+  left:0px;
+  color: #009BB5;
+  text-decoration: none;
+}
+.company__name{
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  position: absolute;
+  display: flex;
+  top: 10px;
+  right:30px;
+  text-decoration: none;
+  color: #000000;
+}
+
+.vacancies__card__div__2{
+  position: relative;
+  width: 100%;
+  height: 33%;
+}
+.vacancies__city{
+  position: absolute;
+  top: 10px;
+  left:0;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000;
+  background: url("../images/location.svg") no-repeat 1px;
+  padding-left:33px;
+}
+
+.vacancies__card__div__3{
+  position: relative;
+  width: 100%;
+  height: 33%;
+}
+.respond__btn{
+  padding-left: 6px;
+  padding-right: 6px;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  background: #fff;
+	color: #009BB5;
+  border: 2px solid;
+	border-radius: 5px;
+  border-color: #009BB5;
+}
+
+.respond__btn:hover{     
+  background-color:#009BB5;    
+  color:#fff;
+}
+.clear__button{
+  top: 10px;
+  position: absolute;
+  left: 0;
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+
+.salary{
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  position: absolute;
+  display: flex;
+  top: 10px;
+  right:30px;
+  text-decoration: none;
+  color: #000000;
+}
+
+.contact__button{
+  top: 10px;
+  position: absolute;
+  left: 0;
+  padding: 0;
+  text-decoration: none;
+}
+.resumes{
+  padding-top: 30px;
+}
+.footer{
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 80px;
+  padding-right: 80px;
+  max-width: 1500px;
+  height: 260px;
+  background-color: #002853;
+}
+.our__contacts_ul{
+  padding-top: 95px;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #FFFFFF;
+  list-style-type: none;
+}
+.our__phone{
+  margin-left: 30px;
+  padding-left:35px ;
+  background: url("../images/telephone.svg") no-repeat;
+}
+.our__tg{
+  margin-left: 30px;
+  padding-left:35px ;
+  background: url("../images/tg.svg") no-repeat;
+}
+
+.our__links{
+  
+  padding-top: 60px;
+  
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #FFFFFF;
+  list-style-type: none;
+}
+.our__links__link{
+  text-decoration: none;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #FFFFFF;
+}
+.is-linkedin{
+  background: url("../images/linkedin.svg") no-repeat;
+  margin-left: 30px;
+  padding-left:35px 
+}
+.is-facebook{
+  background: url("../images/facebook.svg") no-repeat;
+  margin-left: 30px;
+  padding-left:35px 
+}
+
+.is-twitter{
+  background: url("../images/twitter.svg") no-repeat;
+  margin-left: 30px;
+  padding-left:35px 
+}
+
+.is-youtube{
+  background: url("../images/youtube.svg") no-repeat;
+  margin-left: 30px;
+  padding-left:35px 
+}
+
