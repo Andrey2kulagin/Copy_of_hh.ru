@@ -12,8 +12,7 @@ def index(request):
         resume = Resume.objects.all()
     vacancies = Vacancies.objects.all()
     skills = Skills.objects.all()
-
-    context = {"resume": resume, "vacancy": vacancies, "skills": skills}
+    context = {"resumes": resume, "vacancy": vacancies, "skills": skills}
     return render(request, "my_hh_app/index.html", context)
 
 

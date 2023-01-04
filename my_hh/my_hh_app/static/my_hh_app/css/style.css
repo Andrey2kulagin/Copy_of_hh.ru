@@ -39,10 +39,9 @@ header{
 }
 
 .vacancies__search{
-  width: calc(100%);
+  width: 20%;
   height: 100%;
   border: 3px solid #009BB5;
-  position: absolute;
   outline: 0;
   outline-offset: 0px;
   background: url("../images/magnifier_icon-icons.svg") no-repeat 5px;
@@ -255,4 +254,8 @@ header{
   margin-left: 30px;
   padding-left:35px 
 }
+.search__button{
+    position: absolute;
+    right: 0;
 
+}

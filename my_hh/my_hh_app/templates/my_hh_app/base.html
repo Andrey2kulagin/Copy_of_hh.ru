@@ -1,22 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-{{request.user}}
 
-<button><a href="http://127.0.0.1:8000/">Домашняя страница</a></button>
-{% if request.user.is_authenticated == False %}
-<button><a href="http://127.0.0.1:8000/accounts/login">Войти</a></button>
-{% else %}
-<button><a href="http://127.0.0.1:8000/lk">Личный кабинет</a></button>
-<button><a href="http://127.0.0.1:8000/exit">Выход</a></button>
-{% endif %}
-    </div>
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    {%endblock%}
+  <link rel="stylesheet" href="{% static 'my_hh_app/css/normalize.min.css' %}">
+  <link rel="stylesheet" href="{% static 'my_hh_app/css/style.css' %}">
+</head>
+{% load static %}
+<header>
+    <nav class="header__nav">
+        {% if request.user.is_authenticated == False %}
+      <a class="header__link" href="http://127.0.0.1:8000/accounts/login">Вы пока не авторизовались :( </a>
+      <a class="logo" href="http://127.0.0.1:8000/" ><img src="{% static 'my_hh_app/images/Checkr.svg' %}"></a>
+      <a class="header__link" href="http://127.0.0.1:8000/accounts/login"> Войти</a>
+        {% else %}
+        <a class="header__link" href="http://127.0.0.1:8000/lk">{{request.user}} </a>
+      <a class="logo" href="http://127.0.0.1:8000/" ><img src="{% static 'my_hh_app/images/Checkr.svg' %}"></a>
+      <a class="header__link" href="http://127.0.0.1:8000/exit"> Выйти</a>
+        {% endif %}
+    </nav>
+  </header>
 {% block content %}
 {%endblock%}
-</body>
-</html>

@@ -1,31 +1,29 @@
 <!DOCTYPE html>
+{% extends 'my_hh_app/base.html' %}
+
 <html>
-<head>
-  {% load static %}
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My_study</title>
-  <link rel="stylesheet" href="{% static 'my_hh_app/css/normalize.min.css' %}">
-  <link rel="stylesheet" href="{% static 'my_hh_app/css/style.css' %}">
-</head>
-
+  {% block title %}
+  <title>Главная страница</title>
+  {%endblock%}
 <body>
-  <header>
-    <nav class="header__nav">
-      <a class="header__link" href="#">username</a>
-      <a class="logo"><img src="{% static 'my_hh_app/images/Checkr.svg' %}"></a>
-      <a class="header__link" href=""> выход</a>
-    </nav>
-  </header>
 
+
+
+{% block content %}
   <section>
     <div class="vacancies__header">Вакансии </div>
     <div class="search__div">
-      <input class="vacancies__search" type="search" placeholder="Поиск по специальности">
+      <form  method="post" id="1">
+        {% csrf_token %}
+      <input class="vacancies__search"  type="search" placeholder="Поиск по специальности" name="title">
+      </form>
     </div>
+
+    {% for resume in resumes %}
+    <h1>{{text}}</h1>
     <div class="vacancies__card">
       <div class="vacancies__card__div__1">
-        <a class="vacancy__name" href="#">Java developer</a>
+        <a class="vacancy__name" href="#">{{resume.spec}}</a>
         <a class="company__name" href="#"> ООО рога и копыта</a>
       </div>
       <div class="vacancies__card__div__2">
@@ -39,6 +37,8 @@
         <span class="salary">Оплата: 3000$</span>
       </div>
     </div>
+    {% endfor %}
+
 
   </section>
 
@@ -101,6 +101,8 @@
           target="_blank" rel="noopener noreferrer"> <span>YouTube</span></a></li>
     </ul>
   </footer>
+
 </body>
 
 </html>
+{% endblock %}
