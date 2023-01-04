@@ -23,9 +23,20 @@
 {{company_info.strategy_description}}<br>
 <button type="submit"><a href="{{company_info.id}}/change_company_info">Изменить информацию о своей компании</a></button>
 <h3>Отклики на мои вакансии</h3>
-
+<ul>
+{% for response in responses %}
+    <li><a href="http://127.0.0.1:8000/resume_view/{{response.resume_id.id}}">Резюме{{response}}</a>
+        <br><a href="http://127.0.0.1:8000/vacancy_view/{{response.vacancy_id.id}}/1">Вакансия{{response.vacancy_id}}
+        <br></a><p>{{response.cover_letter}}</p></li>
+{% endfor %}
+    </ul>
 <h3>Мои вакансии</h3>
+{% for vacancy in vacancies %}
+    <li><a href="http://127.0.0.1:8000/vacancy_view/{{vacancy.id}}/1">{{vacancy}}</a></li>
+{% endfor %}
 <button><a href="send_vacation">Добавить вакансию</a></button>
+
+
 {% endblock %}
 </body>
 </html>

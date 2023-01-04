@@ -16,8 +16,10 @@ class Skills(models.Model):
 class UserCheckedSkills(models.Model):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     skills_id = models.ManyToManyField(Skills)
+
     def __str__(self):
         return f"{self.user} skills"
+
 
 class Resume(models.Model):
     name = models.CharField("name", max_length=200)
@@ -34,6 +36,9 @@ class Resume(models.Model):
     adres = models.CharField("adres", max_length=200)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.spec
+
 
 class UserStatus(models.Model):
     user = models.CharField("user", max_length=200)
@@ -47,6 +52,9 @@ class Companies(models.Model):
     industry = models.CharField("industry", max_length=200, default="", null=True)
     strategy_description = models.TextField("Strategy_description", default="", null=True)
 
+    def __str__(self):
+        return self.company_name
+
 
 class Vacancies(models.Model):
     title = models.CharField("Title", max_length=200)
@@ -55,6 +63,7 @@ class Vacancies(models.Model):
     skills = models.ManyToManyField(Skills)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     company_name = models.ForeignKey(Companies, on_delete=models.SET_NULL, null=True)
+    description = models.TextField("description", default="")
 
     def __str__(self):
         return self.title
@@ -65,6 +74,9 @@ class ResponsesVacancy(models.Model):
     cover_letter = models.TextField("Cover_letter")
     resume_id = models.ForeignKey(Resume, on_delete=models.SET_NULL, null=True)
     author_vacancy_name = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f"{self.resume_id}"
 
 
 class Profile(models.Model):
@@ -135,6 +147,3 @@ class ResultAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-
-
-

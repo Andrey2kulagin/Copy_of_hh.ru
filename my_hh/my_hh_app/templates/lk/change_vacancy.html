@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {% for el in form %}
+  {{el}}<br>
+  {% endfor %}
+  <button type="submit">Изменить данные</button>
+</form>
+{%endblock %}
+</body>
+</html>

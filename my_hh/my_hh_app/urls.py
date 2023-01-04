@@ -9,5 +9,5 @@ urlpatterns = [
     path("send_resume", views.send_resume),
     path("registrations/<int:int_status>", views.registrations),
     path("add/skills", views.add_to_skills),
-    path("vacancy_view/<int:id>", views.vacancy_view)
+    path("vacancy_view/<int:id>/<int:is_own>", views.vacancy_view)
 ]

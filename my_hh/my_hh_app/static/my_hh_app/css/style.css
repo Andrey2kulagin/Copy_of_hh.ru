@@ -39,14 +39,17 @@ header{
 }
 
 .vacancies__search{
-  width: 20%;
+  width: 100%;
   height: 100%;
   border: 3px solid #009BB5;
   outline: 0;
   outline-offset: 0px;
   background: url("../images/magnifier_icon-icons.svg") no-repeat 5px;
   padding-left:38px;
-  
+}
+.search__form{
+    width: 100%;
+  height: 100%;
 }
 .search__icon{
   padding-right: 0;
@@ -138,6 +141,7 @@ header{
   border: 2px solid;
 	border-radius: 5px;
   border-color: #009BB5;
+  text-decoration: none;
 }
 
 .respond__btn:hover{     

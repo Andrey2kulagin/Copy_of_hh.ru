@@ -5,16 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-{% extends 'my_hh_app/base.html' %}
-{% block content %}
-<br>
-{{vacancy.title}}<br>
-{{vacancy.location}}<br>
-{{vacancy.company_name}}<br>
-{% for skill in vacancy.skills.all%}
-{{skill}}
-{% endfor %}<br>
-{{vacancy.salary}}<br>
+
+{% extends 'my_hh_app/vacancy_view_base.html' %}
+{% block vacancy_view_content %}
+
 {% if status == "candidate" %}
 <form method="post">
     {% csrf_token %}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/vacancy_view_base.html' %}
+{% block vacancy_view_content %}
+<h1>{{vacancy.id}}</h1>
+<a href="http://127.0.0.1:8000/lk/{{vacancy.id}}/change_vacancy">Редактировать вакансию</a>
+<form  method="post">
+        {% csrf_token %}
+      <button type="submit"> Удалить вакансию</button>
+      </form>
+{% endblock %}
+</body>
+</html>

@@ -6,13 +6,23 @@ from django.contrib.auth.models import User
 
 
 def index(request):
+    resume = None
+    vacancies = None
     if request.method == "POST":
-        resume = Resume.objects.filter(spec__contains=request.POST.get("title", ""))
+        if "resumes_search" in request.POST and "vacancies_search" in request.POST:
+            resume = Resume.objects.filter(spec__contains=request.POST.get("resumes_search", ""))
+            vacancies = Vacancies.objects.filter(title__contains=request.POST.get("vacancies_search", ""))
+        elif "vacancies_search" in request.POST:
+            vacancies = Vacancies.objects.filter(title__contains=request.POST.get("vacancies_search", ""))
+            resume = Resume.objects.all()
+        elif "resumes_search" in request.POST:
+            resume = Resume.objects.filter(spec__contains=request.POST.get("resumes_search", ""))
+            vacancies = Vacancies.objects.all()
     else:
         resume = Resume.objects.all()
-    vacancies = Vacancies.objects.all()
+        vacancies = Vacancies.objects.all()
     skills = Skills.objects.all()
-    context = {"resumes": resume, "vacancy": vacancies, "skills": skills}
+    context = {"resumes": resume, "vacancies": vacancies, "skills": skills, }
     return render(request, "my_hh_app/index.html", context)
 
 
@@ -91,28 +101,35 @@ def add_to_skills(request):
 
 
 @login_required
-def vacancy_view(request, id):
-    # Прописать обработку формы
+def vacancy_view(request, id, is_own):
+    cure_user = request.user
+    cure_user_status = UserStatus.objects.get(user=cure_user).status
     vacancy = Vacancies.objects.get(id=id)
-    user = request.user
-    resume = Resume.objects.filter(author=user)
-    if request.method == "POST":
-        if len(resume) == 0:
-            return render(request, "my_hh_app/send_resume_pls.html")
-        form = ResponsesForm(user, request.POST)
-        if form.is_valid():
-            vacancy_form = form.save(commit=False)
-            vacancy_form.vacancy_id = vacancy
-            vacancy_form.resume_id = Resume.objects.get(id=request.POST["resumes"])
-            vacancy_form.author_vacancy_name = vacancy.author
-            vacancy_form.save()
+    if cure_user_status == "candidate":
+        resume = Resume.objects.filter(author=cure_user)
+        if request.method == "POST":
+            if len(resume) == 0:
+                return render(request, "my_hh_app/send_resume_pls.html")
+            form = ResponsesForm(cure_user, request.POST)
+            if form.is_valid():
+                vacancy_form = form.save(commit=False)
+                vacancy_form.vacancy_id = vacancy
+                vacancy_form.resume_id = Resume.objects.get(id=request.POST["resumes"])
+                vacancy_form.author_vacancy_name = vacancy.author
+                vacancy_form.save()
+        form = ResponsesForm(cure_user)
+        context = {
+            "vacancy": vacancy,
+            "form": form,
+        }
+        return render(request, "my_hh_app/vacancy_view.html", context)
+    elif cure_user_status == "employer" or cure_user_status == "top_employer":
+        context = {"vacancy": vacancy}
+        if is_own == 0:
+            return render(request,"my_hh_app/vacancy_view_base.html", context)
+        else:
+            if request.method == "POST":
+                Vacancies.objects.get(id=id).delete()
+                return redirect("http://127.0.0.1:8000/lk/")
+            return render(request, "my_hh_app/vacancy_view_employer_own.html", context)
 
-    status = UserStatus.objects.get(user=user).status
-    form = ResponsesForm(user)
-    context = {
-        "vacancy": vacancy,
-        "status": status,
-        "form": form,
-
-    }
-    return render(request, "my_hh_app/vacancy_view.html", context)
