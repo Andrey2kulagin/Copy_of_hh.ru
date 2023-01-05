@@ -34,14 +34,11 @@
 </table>
 
 <input type="submit" value="login" />
-  {% if next %}
-<input type="hidden" name="next" value="{{next}}" />
+  {% if request.GET.next %}
+<input type="hidden" name="next" value="{{request.GET.next}}" />
   {% else %}
 <input type="hidden" name="next" value="http://127.0.0.1:8000/lk" />
   {% endif %}
 </form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 </body>
 </html>

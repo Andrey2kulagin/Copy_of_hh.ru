@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'my_hh_app/base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+
+    <button type="submit" >Добавить</button>
+    <input type=button value="Вернуться на прошлую страницу" onClick="javascript:history.go(-2);">
+    Чтобы добавленный навык появился обновите прошлую страницу
+</form>
+{% endblock %}
+</body>
+</html>

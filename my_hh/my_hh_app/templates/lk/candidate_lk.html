@@ -11,22 +11,20 @@
 
 <button> <a href="http://127.0.0.1:8000/send_resume">Добавить резюме</a></button>
 <h1>Мои резюме</h1>
-{% for el in resume %}
+{% for resume in author_resumes %}
 
-<a href="resume_view/{{el.id}}">{{el.spec}}</a><br>
+<a href="resume_view/{{resume.id}}">{{resume.spec}}</a><br>
 {% endfor %}
 
 <button> <a href="">Внести изменения в резюме</a></button>
 
 <h1>Мои подтверждённые навыки</h1>
-{% if checked_skills == "0" %}
+{% if checked_skills == 0 %}
 <h3>У вас пока нет подтверждённых навыков</h3>
 {% else %}
-{% for el in checked_skills %}
-{% for el1 in el.skills_id.all %}
-<h5>el1</h5>
-{% endfor %}
-{% endfor %}
+    {% for checked_skill in checked_skills.all %}
+        <h5>{{checked_skill}}</h5>
+    {% endfor %}
 {%endif %}
 <button><a href="skills_for_check">Подтвердить навыки</a></button>
 {% endblock %}

@@ -3,6 +3,9 @@ from .models import Resume, UserStatus, Companies, Vacancies, Skills, UserChecke
 from .forms import ResumeForm, UserRegistrationForm, RegistrationForm, UserStatusForm, SkillsForm, ResponsesForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
+from django.http import HttpResponseRedirect
 
 
 def index(request):
@@ -34,6 +37,7 @@ def send_resume(request):
         new_post.author = request.user
         new_post.save()
         form.save_m2m()
+        return redirect("http://127.0.0.1:8000/lk/")
     form = ResumeForm()
     context = {"form": form, "user": request.user}
     return render(request, "my_hh_app/send_resume.html", context)
@@ -57,7 +61,8 @@ def registrations(request, int_status):
             user_status.user = request.POST.__getitem__("username")
             user_status.status = status
             user_status.save()
-            form.save()
+            user = form.save()
+            login(request,user)
             if int_status == 2:
                 company = Companies(company_name=post.__getitem__("username"))
                 company.author = User.objects.get(username=post.__getitem__("username"))
@@ -97,7 +102,7 @@ def add_to_skills(request):
             form.save()
     form = SkillsForm()
     context = {"form": form}
-    return render(request, "my_hh_app/add_to_model.html", context)
+    return render(request, "my_hh_app/add_skill.html", context)
 
 
 @login_required
@@ -133,3 +138,17 @@ def vacancy_view(request, id, is_own):
                 return redirect("http://127.0.0.1:8000/lk/")
             return render(request, "my_hh_app/vacancy_view_employer_own.html", context)
 
+def login_view(request):
+    context = {}
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            if "next" in request.POST:
+                return redirect(request.POST.get("next"))
+            return redirect("http://127.0.0.1:8000/")
+    else:
+        form = AuthenticationForm()
+    context['form'] = form
+    return render(request,"registration/login.html", context)

@@ -18,27 +18,27 @@ Question = apps.get_model('my_hh_app', 'Question')
 
 @login_required
 def lk(request):
-    cure_user = request.user
-    cure_user_status = UserStatus.objects.get(user=cure_user).status
     user = request.user
-    author_resume = Resume.objects.filter(author=user)
+    cure_user_status = UserStatus.objects.get(user=user).status
     context = {"cure_user_status": cure_user_status}
     if request.method == "POST":
-        user_status = UserStatus.objects.get(user=cure_user)
+        user_status = UserStatus.objects.get(user=user)
         user_status.status = "top_employer"
         user_status.save()
     if cure_user_status == "candidate":
-        context["author_resume"] = author_resume
-        checked_skills = UserCheckedSkills.objects.filter(user=user)
-        if len(checked_skills) == 0:
-            context["checked_skills"] = "0"
+        author_resume = Resume.objects.filter(author=user)
+        context["author_resumes"] = author_resume
+        checked_skills = UserCheckedSkills.objects.get(user=user).skills_id
+        if len(checked_skills.all()) == 0:
+            context["checked_skills"] = 0
         else:
+            context["checked_skills_len"] = checked_skills
             context["checked_skills"] = checked_skills
         return render(request, "lk/candidate_lk.html", context)
     elif cure_user_status == "employer" or cure_user_status == "top_employer":
-        company_info = Companies.objects.get(author=cure_user, )
-        responses = ResponsesVacancy.objects.filter(author_vacancy_name=cure_user)
-        vacancies = Vacancies.objects.filter(author=cure_user)
+        company_info = Companies.objects.get(author=user, )
+        responses = ResponsesVacancy.objects.filter(author_vacancy_name=user)
+        vacancies = Vacancies.objects.filter(author=user)
         context["company_info"] = company_info
         context["responses"] = responses
         context["vacancies"] = vacancies
@@ -60,13 +60,12 @@ class NewUpdateView(UpdateView):
               "age",
               "spec",
               "type_of_employment",
-              "UserCheckedSkills",
               "adres",
               "experience",
               "skills",
               "salary"
               ]
-    success_url = "http://127.0.0.1:8000/lk/resume_view"
+    success_url = "http://127.0.0.1:8000/lk"
 
 
 class CompanyUpdate(UpdateView):
@@ -91,7 +90,7 @@ class VacancyUpdate(UpdateView):
               ]
     success_url = "http://127.0.0.1:8000/lk"
 
-
+@login_required
 def send_vacation(request):
     if request.method == "POST":
         form = VacanciesForm(request.POST)
@@ -107,7 +106,7 @@ def send_vacation(request):
     context = {"VacanciesForm": form, }
     return render(request, "lk/send_vacation.html", context)
 
-
+@login_required
 def skills_for_check(request):
     user = request.user
     all_skills = [x.skill for x in Skills.objects.filter(is_checked=True)]
@@ -155,15 +154,17 @@ def get_right_answers(right_ids, cure_ids):
 
 
 def check_skill(request, name):
+    context = {}
     post = 1
     skills_object = Skills.objects.get(skill=name)
     if request.method == "POST":
-        number_of_points = 0
         post = request.POST
         right_ids = get_right_ids(skills_object)
         cure_ids = get_cure_ids(post)
         number_of_points = get_right_answers(right_ids, cure_ids)
         minimal_level = Profile.objects.get(name=skills_object).good
+        context["minimal_level"] = minimal_level
+        context["points"] = number_of_points
         if number_of_points >= minimal_level:
             checked_skills = UserCheckedSkills.objects.filter(user=request.user)
             if len(checked_skills) > 0:
@@ -175,7 +176,11 @@ def check_skill(request, name):
                 checked_skills.user = request.user
                 checked_skills.skills_id = skills_object
                 checked_skills.save()
-
+            context["is_confirmed"]=1
+        else:
+            context["is_confirmed"] = 0
+        return render(request, "lk/is_skill_confirmed.html", context)
     test_form = TestForm(name=skills_object)
-    context = {"test_form": test_form, "post": post, }
+    context["test_form"] = test_form
+    context["post"] = post
     return render(request, "lk/check_skill.html", context)
