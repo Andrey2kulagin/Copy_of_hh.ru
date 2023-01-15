@@ -43,6 +43,8 @@ class Resume(models.Model):
 class UserStatus(models.Model):
     user = models.CharField("user", max_length=200)
     status = models.CharField("status", max_length=200)
+    def __str__(self):
+        return self.user
 
 
 class Companies(models.Model):

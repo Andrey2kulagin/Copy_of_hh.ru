@@ -8,16 +8,17 @@
 
 {% extends 'my_hh_app/vacancy_view_base.html' %}
 {% block vacancy_view_content %}
-
 {% if status == "candidate" %}
-<form method="post">
+<div class="response__background__div">
+<form method="post" class="cover__letter__form">
     {% csrf_token %}
     {{form.cover_letter}}
     {{form.resumes}}
-    <button> Оставить отклик</button>
-</form>
+    <button class="respond__btn" type="submit"> Откликнуться </button>
+      </form> 
+</div>
 {% else %}
-Чтобы оставить отклик, зарегистрируйтесь, как соискатель
+<h1 class="ol__header">Чтобы оставить отклик, зарегистрируйтесь, как соискатель</h1>
 {% endif %}
 {{resumes}}
 

@@ -64,6 +64,9 @@ class SkillsForm(forms.ModelForm):
 
 
 class ResponsesForm(forms.ModelForm):
+    cover_letter = forms.CharField(
+        widget = forms.Textarea(attrs={'class': 'cover__letter__input', 'placeholder':'Заполните сопроводительное письмо'})
+    )
     def __init__(self, user, *args, **kwargs):
         resume = Resume.objects.filter(author=user)
         options = []
@@ -71,8 +74,8 @@ class ResponsesForm(forms.ModelForm):
         for i in resume:
             options.append((i.id, str(i)))
         self.fields['resumes'] = forms.ChoiceField(
-            choices=[(i.id, str(i)) for i in resume])
-
+            choices=[(i.id, str(i)) for i in resume], 
+            widget=forms.Select(attrs={'class':'resume__choise'}))
     class Meta:
         model = ResponsesVacancy
         fields = ["cover_letter", ]

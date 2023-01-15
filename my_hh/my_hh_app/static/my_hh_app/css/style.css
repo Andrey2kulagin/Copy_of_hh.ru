@@ -170,6 +170,7 @@ line-height: 28px;
   text-decoration: none;
   background-color:#009BB5;    
   color:#fff;
+  
 }
 .clear__button{
   top: 10px;
@@ -744,3 +745,26 @@ height: 65px;
   background: url("../images/salary_icon.svg") no-repeat 5px;
 }
 
+.response__background__div{
+  width: 1230px;
+  height: 140px;
+  background-color: #F8F6F2;
+  display: flex;
+  position: relative;
+}
+.cover__letter__form{
+  width: 100%;
+  height: 100;
+  
+}
+.cover__letter__input{
+  height: 80%;
+  border-radius: 5px;
+  margin-top: 1%;
+  margin-left: 1%;
+  
+}
+.vacancy__description__p{
+  color: #000;
+  margin-left: 50px;
+}

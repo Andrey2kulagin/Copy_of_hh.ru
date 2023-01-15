@@ -110,6 +110,7 @@ def vacancy_view(request, id, is_own):
     cure_user = request.user
     cure_user_status = UserStatus.objects.get(user=cure_user).status
     vacancy = Vacancies.objects.get(id=id)
+    context = {"status":cure_user_status}
     if cure_user_status == "candidate":
         resume = Resume.objects.filter(author=cure_user)
         if request.method == "POST":
@@ -123,15 +124,13 @@ def vacancy_view(request, id, is_own):
                 vacancy_form.author_vacancy_name = vacancy.author
                 vacancy_form.save()
         form = ResponsesForm(cure_user)
-        context = {
-            "vacancy": vacancy,
-            "form": form,
-        }
+        context["vacancy"]= vacancy
+        context["form"]= form
         return render(request, "my_hh_app/vacancy_view.html", context)
     elif cure_user_status == "employer" or cure_user_status == "top_employer":
-        context = {"vacancy": vacancy}
+        context["vacancy"] = vacancy
         if is_own == 0:
-            return render(request,"my_hh_app/vacancy_view_base.html", context)
+            return render(request,"my_hh_app/vacancy_view.html", context)
         else:
             if request.method == "POST":
                 Vacancies.objects.get(id=id).delete()

@@ -7,17 +7,42 @@
 <body>
 {% extends 'my_hh_app/base.html' %}
 {% block content %}
-<br>
-{{vacancy.title}}<br>
-{{vacancy.location}}<br>
-{{vacancy.company_name}}<br>
-{% for skill in vacancy.skills.all%}
-{{skill}}
-{% endfor %}<br>
-{{vacancy.salary}}<br>
-{% block vacancy_view_content %}
+
+
+<section class="vacancy__view__section">
+    <div class="vacancies__card">
+          <div class="vacancies__card__div__1">
+            <a class="vacancy__name" href="/vacancy_view/{{vacancy.id}}/0">{{vacancy.title}}</a>
+            <a class="company__name" href="#"> {{vacancy.company_name}}</a>
+          </div>
+          <div class="vacancies__card__div__2">
+            <span class="vacancies__city">{{vacancy.location}}</span>
+          </div>
+          <div class="vacancies__card__div__3">
+            <span class="salary">Оплата: {{vacancy.salary}}</span>
+          </div>
+        </div>
+        <div class="vacancy__view__list">
+          <p class="ol__header"> Мы ожидаем от вас следующих навыков</p>
+          <ol class="vacancy__view__list__ol">
+            {% for el in vacancy.skills.all %}
+            <li><p class="vacancy__view__p">{{el}}</p></li>
+            {% endfor %}
+          </ol>
+        </div>
+        <div class="vacancy__view__list">
+          <p class="ol__header"> Описание вакансии</p>
+          <p class="vacancy__description__p">{{vacancy.description}}</p>
+        </div>
+        {% block vacancy_view_content %}
 {% endblock %}
+      </section>
+
 {% endblock %}
+
+
+
+
 
 </body>
 </html>
