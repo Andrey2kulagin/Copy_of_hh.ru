@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Resume, UserStatus, Companies, Vacancies, Skills, UserCheckedSkills
-from .forms import ResumeForm, UserRegistrationForm, RegistrationForm, UserStatusForm, SkillsForm, ResponsesForm
+from .forms import ResumeForm, UserRegistrationForm, RegistrationForm, UserStatusForm, SkillsForm, ResponsesForm, MyLoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
@@ -139,16 +139,16 @@ def vacancy_view(request, id, is_own):
             return render(request, "my_hh_app/vacancy_view_employer_own.html", context)
 
 def login_view(request):
-    context = {}
+    context = {} 
     if request.method == "POST":
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
+        my_form = MyLoginForm(data=request.POST)
+        if my_form.is_valid():
+            user = my_form.get_user()
             login(request, user)
             if "next" in request.POST:
                 return redirect(request.POST.get("next"))
             return redirect("http://127.0.0.1:8000/")
     else:
-        form = AuthenticationForm()
-    context['form'] = form
+        my_form = MyLoginForm()
+    context['my_form'] = my_form
     return render(request,"registration/login.html", context)

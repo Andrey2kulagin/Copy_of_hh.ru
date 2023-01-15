@@ -1,7 +1,9 @@
+
 from .models import Resume, UserStatus, Skills, ResponsesVacancy, Question, Profile, Answer
 from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.utils.translation import gettext, gettext_lazy as _
 
 
 class ResumeForm(forms.ModelForm):
@@ -75,6 +77,17 @@ class ResponsesForm(forms.ModelForm):
         model = ResponsesVacancy
         fields = ["cover_letter", ]
 
-
+class MyLoginForm(AuthenticationForm):
+    username = forms.CharField(max_length=200,
+        label='Username', help_text="",
+        widget=forms.TextInput(attrs={'class':'username__input', 'placeholder':'Введите имя пользователя'}))
+    password = forms.CharField(
+        label="Password",
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "password", 'class':"password__input", 'placeholder':"Введите пароль"}),
+    )
+    class Meta:
+        model = User
+        fields = ('username',  'password' )
 
 
