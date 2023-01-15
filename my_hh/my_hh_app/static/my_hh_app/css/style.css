@@ -8,7 +8,7 @@ header{
   padding-right: 200px;
 }
 input{
-  width: 480px;
+  width: 100%;
   height: 70px;
   outline: 0;
   outline-offset: 0px;
@@ -592,7 +592,7 @@ line-height: 37px;
 .resume__div{
   margin: 15px auto;
   width: 1167px;
-  height: 1050px;
+  height: 1150px;
   background-color: #F8F6F2;
   padding-top: 30px;
   justify-content: space-between;
@@ -608,7 +608,13 @@ height: 65px;
   background: url("../images/spec_icon.svg") no-repeat 5px;
 }
 .gender__input{
-  background: url("i../mages/gender_icon.svg") no-repeat 5px;
+  background: url("../images/gender_icon.svg") no-repeat 5px;
+  width: 100%;
+  height: 70px;
+  padding-left:50px;
+  outline: 0;
+  outline-offset: 0px;
+  border: none;
 }
 .age__input{
   background: url("../images/age_icon.svg") no-repeat 5px;
@@ -621,8 +627,21 @@ height: 65px;
 }
 .type__input{
   background: url("../images/type_icon.svg") no-repeat 5px;
+  width: 100%;
+  height: 70px;
+  padding-left:50px;
+  outline: 0;
+  outline-offset: 0px;
+  border: none;
 }
+
 .skills__input{
+  width: 100%;
+  height: 43px;
+  padding-left:50px;
+  outline: 0;
+  outline-offset: 0px;
+  border: none;
   background: url("../images/skills_icon.svg") no-repeat 5px;
 }
 .contact__input{
@@ -766,5 +785,38 @@ height: 65px;
 }
 .vacancy__description__p{
   color: #000;
+  margin-left: 50px;
+}
+.edit__vacancy{
+  position: absolute;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  background: #fff;
+	color: #009BB5;
+  border: 2px solid;
+	border-radius: 5px;
+  border-color: #009BB5;
+  text-decoration: none;
+  left: 170px;
+}
+.remove__vacancy{
+  right: 170px;
+  position: absolute;
+}
+.edit__remove__vacancy{
+  height: 40px;
+  position: relative;
+}
+.hint__p{
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  display: flex;
   margin-left: 50px;
 }

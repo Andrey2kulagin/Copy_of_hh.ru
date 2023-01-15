@@ -7,6 +7,19 @@ from django.utils.translation import gettext, gettext_lazy as _
 
 
 class ResumeForm(forms.ModelForm):
+    type_of_employment_option = (("full-time", "full-time"), ("part-time", "part-time"))
+    spec = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"spec__input" ,"placeholder":"Введите название вашей специальности"}))
+    name = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"username__input" ,"placeholder":"ФИО"}))
+    gender_option = (("male", "Мужской"), ("female", "Женский"))
+    gender = forms.ChoiceField(choices=gender_option,widget=forms.Select( attrs={"class":"gender__input" }))
+    age = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"age__input" ,"placeholder":"Укажите ваш возраст"}))
+    adres = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"city__input" ,"placeholder":"Укажите город, в котором планируете работать"}))
+    experience = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"exp__input" ,"placeholder":"Ваш опыт работы(Сколько лет?)"}))
+    type_of_employment = forms.ChoiceField(choices=type_of_employment_option, widget=forms.Select( attrs={"class":"type__input" ,"placeholder":"Выберите предпочитаемый тип занятости"}))
+    skills_option = ((i.id, str(i)) for i in Skills.objects.all())
+    skills = forms.MultipleChoiceField(choices=skills_option, widget=forms.SelectMultiple( attrs={"class":"skills__input" ,"placeholder":"Укажите ваши навыки", 'size': '5'}))
+    phone = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"contact__input" ,"placeholder":"Укажите ваши контакты"}))
+    salary = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"salary__input" ,"placeholder":"Ожидаемая зарплата(с указанием валюты)"}))
     class Meta:
         model = Resume
         fields = ["name",

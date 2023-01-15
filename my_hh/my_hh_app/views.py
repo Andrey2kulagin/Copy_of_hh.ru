@@ -33,11 +33,15 @@ def index(request):
 def send_resume(request):
     if request.method == "POST":
         form = ResumeForm(request.POST)
-        new_post = form.save(commit=False)
-        new_post.author = request.user
-        new_post.save()
-        form.save_m2m()
-        return redirect("http://127.0.0.1:8000/lk/")
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.save()
+            form.save_m2m()
+            return redirect("http://127.0.0.1:8000/lk/")
+        else:
+            context = {"error":form.errors}
+            return render(request, "my_hh_app/send_resume.html", context)
     form = ResumeForm()
     context = {"form": form, "user": request.user}
     return render(request, "my_hh_app/send_resume.html", context)

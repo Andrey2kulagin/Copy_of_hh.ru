@@ -7,24 +7,32 @@
 <body>
 {% extends 'my_hh_app/base.html' %}
 {% block content %}
-<form method="post">
-  {% csrf_token %}
-  {{form.name}}
-  {{form.gender}}
-  {{form.phone}}
-  {{form.age}}
-  {{form.spec}}
-  {{form.type_of_employment}}
-  {{form.adres}}
-  {{form.experience}}
-  {{form.skills}}
-    <button><a href="http://127.0.0.1:8000/add/skills">Добавить навыки</a></button>
-  {{form.salary}}
+{% if error %}
+<h1>ERRORS: {{error}}</h1>
+{%endif%}
+<section>
+  <div class="resume__div">
+    <p class=login__p>Заполнение резюме</p>
+    <form method="post" class="resume__form">
+      {% csrf_token %}
+      <div class="all__input__div">
+      <div class="resume__input__div"> {{form.spec}}</div>  
+      <div class="resume__input__div">{{form.name}}</div>  
+      <div class="resume__input__div">{{form.gender}}</div>
+      <div class="resume__input__div">{{form.age}}</div>
+      <div class="resume__input__div">{{form.adres}}</div>
+      <div class="resume__input__div">{{form.experience}}</div>
+      <div class="resume__input__div">{{form.type_of_employment}}</div>
+      <div class="resume__input__div">{{form.skills}}<span class="hint__p">Для выбора нескольких вариантов зажмите ctrl</span></div>
+      <div class="resume__input__div">{{form.phone}}</div>
+      <div class="resume__input__div">{{form.salary}}</div>
+      </div>
+      <button class="save__resume__btn" type="submit"><p class="login__btn__p">Получить работу мечты</p></button>
+    </form>
+    
+  </div>
 
-  <button type="submit">Получить работу мечты</button>
-</form>
-user
-{{user}}
+</section>
 {% endblock %}
 </body>
 </html>

@@ -30,7 +30,7 @@ class Resume(models.Model):
     option = (("full-time", "full-time"), ("part-time", "part-time"))
     type_of_employment = models.CharField("type_of_employment", max_length=200, choices=option)
     skills = models.ManyToManyField(Skills)
-    age = models.CharField("age", max_length=3)
+    age = models.CharField("age", max_length=100)
     phone = models.CharField("phone", max_length=20)
     salary = models.CharField("salary", max_length=200)
     adres = models.CharField("adres", max_length=200)
