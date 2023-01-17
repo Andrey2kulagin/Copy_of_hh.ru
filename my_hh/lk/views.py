@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.apps import apps
-from .forms import VacanciesForm, TestForm
+from .forms import VacanciesForm, TestForm, CompaniesForm
 from django.views.generic import UpdateView
 from my_hh_app.forms import ResumeForm
 
@@ -53,6 +53,7 @@ def resume_view(request, pk):
 
 
 def resume_update(request, pk):
+    context = {}
     resume = Resume.objects.get(id=pk)
     if request.method == "POST":
         form = ResumeForm(instance=resume,data=request.POST)
@@ -63,35 +64,45 @@ def resume_update(request, pk):
             form.save_m2m()
             return redirect("http://127.0.0.1:8000/lk/")
         else:
-            context = {"error":form.errors}
+            context["error"] = form.errors
             return render(request, "my_hh_app/send_resume.html", context)
     form = ResumeForm(instance=resume)
     context = {"form": form}
     return render(request, "my_hh_app/send_resume.html", context)
 
 
+def change_company_info(request, pk):
+    context = {}
+    info = Companies.objects.get(id=pk)
+    if request.method == "POST":
+        form = CompaniesForm(instance=info,data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("http://127.0.0.1:8000/lk/")
+        else:
+            context["error"] = form.errors
+            return render(request, "lk/change_company_info.html", context)
+    form = CompaniesForm(instance=info)
+    context["form"] = form
+    return render(request, "lk/change_company_info.html", context)
 
-class CompanyUpdate(UpdateView):
-    model = Companies
-    template_name = "lk/change_company_info.html"
-    fields = [
-        "company_name",
-        "foundation_data",
-        "industry",
-        "strategy_description",
-    ]
-    success_url = "http://127.0.0.1:8000/lk"
 
 
-class VacancyUpdate(UpdateView):
-    model = Vacancies
-    template_name = "lk/change_vacancy.html"
-    fields = ["title",
-              "location",
-              "salary",
-              "skills"
-              ]
-    success_url = "http://127.0.0.1:8000/lk"
+
+def change_vacancy(request, pk):
+    context = {}
+    vacancy = Vacancies.objects.get(id=pk)
+    if request.method == "POST":
+        form = VacanciesForm(instance=vacancy,data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("http://127.0.0.1:8000/lk/")
+        else:
+            context["error"] = form.errors
+            return render(request, "lk/send_vacation.html", context)
+    form = VacanciesForm(instance=vacancy)
+    context["VacanciesForm"] = form
+    return render(request, "lk/send_vacation.html", context)
 
 @login_required
 def send_vacation(request):

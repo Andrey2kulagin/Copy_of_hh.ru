@@ -1,20 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% extends 'my_hh_app/base.html' %}
+{% block title %}
+    <title>Изменение информации о компании</title>
+{% endblock %}
 {% block content %}
+{{error}}
 <form method="post">
-    <button><a href="exit/"> Выйти из учетной записи</a></button>
   {% csrf_token %}
-  {% for el in form %}
-  {{el}}<br>
-  {% endfor %}
-  <button type="submit">Изменить данные</button>
+  <div class="login__div">
+    <p class=employer__lk__p>О вашей компании</p>
+    <div class="login__input__div">
+      <div class="edit__div"> <span class="disc__line"></span>
+        {{form.company_name}}
+      </div>
+    </div>
+    <div class="login__input__div">
+      <div class="edit__div"> <span class="disc__line">Основана:</span>
+        {{form.foundation_data}}
+      </div>
+    </div>
+    <div class="login__input__div">
+      <div class="edit__div"> <span class="disc__line">Отрасль:</span>
+        {{form.industry}}
+      </div>
+    </div>
+    <div class="company__info__big">
+      {{form.strategy_description}}
+    </div>
+    <button type="submit" class="login__btn">
+      <p class="login__btn__p">Сохранить</p>
+    </button>
+  </div>
 </form>
+
 {%endblock %}
 </body>
 </html>

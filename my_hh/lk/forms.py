@@ -6,6 +6,7 @@ Skills = apps.get_model("my_hh_app", "Skills")
 Profile = apps.get_model("my_hh_app", "Profile")
 Question = apps.get_model("my_hh_app", "Question")
 Answer = apps.get_model("my_hh_app", "Answer")
+Companies = apps.get_model("my_hh_app", "Companies")
 
 
 class VacanciesForm(forms.ModelForm):
@@ -39,3 +40,20 @@ class TestForm(forms.Form):
                 choices.append((str(j.id), str(j.text)))
             self.fields[i.text] = forms.ChoiceField(
                 choices=choices)
+                
+
+
+class CompaniesForm(forms.ModelForm):
+    company_name = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"edit__input" ,}))
+    foundation_data = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"edit__input" ,}))
+    industry = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"edit__input" ,}))
+    strategy_description = forms.CharField(
+        widget = forms.Textarea(attrs={'class': 'strategy__description__input'})
+    )
+    class Meta:
+        model = Companies
+        fields = ["company_name",
+                  "foundation_data",
+                  "industry",
+                  "strategy_description",
+                  ]

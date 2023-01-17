@@ -24,7 +24,7 @@ class UserCheckedSkills(models.Model):
 class Resume(models.Model):
     name = models.CharField("name", max_length=200)
     option = (("male", "Мужской"), ("female", "Женский"))
-    gender = models.CharField("gender", max_length=200, choices=option)
+    gender = models.CharField("gender", max_length=200, choices=option ,)
     spec = models.TextField("speciality", max_length=200)
     experience = models.TextField("experience")
     option = (("full-time", "full-time"), ("part-time", "part-time"))
