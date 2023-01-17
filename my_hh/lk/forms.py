@@ -9,12 +9,21 @@ Answer = apps.get_model("my_hh_app", "Answer")
 
 
 class VacanciesForm(forms.ModelForm):
+    title = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"spec__input" ,"placeholder":"Введите название вашей специальности"}))
+    location = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"city__input" ,"placeholder":"Укажите город, в котором планируете работать"}))
+    salary = forms.CharField(max_length=200,widget=forms.TextInput( attrs={"class":"salary__input" ,"placeholder":"Ожидаемая зарплата(с указанием валюты)"}))
+    skills_option = ((i.id, str(i)) for i in Skills.objects.all())
+    skills = forms.MultipleChoiceField(choices=skills_option, widget=forms.SelectMultiple( attrs={"class":"skills__input" ,"placeholder":"Укажите ваши навыки", 'size': '5'}))
+    description = forms.CharField(
+        widget = forms.Textarea(attrs={'class': 'vacancy__description__input', 'placeholder':'Подробно опишите, чем предстоит заниматься'})
+    )
     class Meta:
         model = Vacancies
         fields = ["title",
                   "location",
                   "salary",
-                  "skills"
+                  "skills",
+                  "description"
                   ]
 
 

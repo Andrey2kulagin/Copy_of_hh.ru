@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% extends 'my_hh_app/base.html' %}
+{% block title %}
+    <title>Заполнение вакансии</title>
+{% endblock %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{VacanciesForm.title}}
-    {{VacanciesForm.location}}
-    {{VacanciesForm.skills}}
-    <button><a href="http://127.0.0.1:8000/add/skills"> Добавить скилы</a></button>
-    {{VacanciesForm.salary}}
-    <button type="submit"> Отправить вакансию </button>
-</form>
-{{skills_ids1}}
-{% for el in skills_ids %}
-{{el}}
-{%endfor%}
+<section>
+    <div class="vacancy__div">
+      <p class=login__p>Заполнение резюме</p>
+      <form method="post" class="resume__form">
+        {% csrf_token %}
+        <div class="all__input__div">
+          <div class="resume__input__div">{{VacanciesForm.title}}</div>
+          <div class="resume__input__div">{{VacanciesForm.location}}</div>
+          <div class="resume__input__div"> {{VacanciesForm.skills}}<span class="hint__p">Для выбора нескольких вариантов зажмите ctrl</span></div>
+          <div class="resume__input__div">{{VacanciesForm.salary}}</div>
+          <div class="resume__input__big__div">{{VacanciesForm.description}}</div>
+        </div>
+        <button class="save__resume__btn">
+          <p class="login__btn__p">Сохранить</p>
+        </button>
+      </form>
+    </div>
+  </section>
 {% endblock %}
 </body>
 </html>

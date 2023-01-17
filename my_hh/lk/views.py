@@ -97,7 +97,6 @@ class VacancyUpdate(UpdateView):
 def send_vacation(request):
     if request.method == "POST":
         form = VacanciesForm(request.POST)
-        # skills_ids1 = form.cleaned_data.get('skills')
         if form.is_valid():
             vacation1 = form.save(commit=False)
             vacation1.author = request.user
