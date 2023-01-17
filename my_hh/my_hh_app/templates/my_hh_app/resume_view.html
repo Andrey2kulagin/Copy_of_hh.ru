@@ -1,30 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% extends 'my_hh_app/base.html' %}
+{% block title %}
+    <title>Просмотр резюме</title>
+{% endblock%}
+<body>
 {% block content %}
-{{resume.id}}<br>
-{{resume.name}}<br>
-{{resume.gender}}<br>
-{{resume.phone}}<br>
-{{resume.age}}<br>
-{{resume.spec}}<br>
-{{resume.type_of_employment}}<br>
-{{resume.adres}}<br>
-{{resume.experience}}<br>
-{% for skill in resume.skills.all%}
-{{skill}}
-{% endfor %}<br>
-{% for skill in checked_skills.all%}
-{{skill}}
-{% endfor %}<br>
-{{resume.salary}}<br>
-<br>
-<br>
+<section>
+    <div class="resume__div">
+      <p class=login__p>Заполнение резюме</p>
+        <div class="all__input__div"> 
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/spec_icon.svg"class="resume__view__img"> 
+                <span class="resume__view__span">{{resume.spec}}</span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/name_icon.svg"class="resume__view__img"> 
+                <span class="resume__view__span">{{resume.name}}</span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/gender_icon.svg"class="resume__view__img"> 
+                <span class="resume__view__span">{{resume.gender}}</span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/age_icon.svg"class="resume__view__img"> 
+                <span class="resume__view__span">{{resume.age}}</span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/city_icon.svg"class="resume__view__img">
+                <span class="resume__view__span">{{resume.adres}}</span>
+                </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/exp_icon.svg"class="resume__view__img">
+                <span class="resume__view__span">{{resume.experience}}</span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/type_icon.svg"class="resume__view__img">
+                <span class="resume__view__span">{{resume.type_of_employment}}</span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/skills_icon.svg"class="resume__view__img">
+                <span class="resume__view__span">
+                    {% for skill in resume.skills.all%}
+                        {{skill}}
+                    {% endfor %}
+                </span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/skills_icon.svg"class="resume__view__img">
+                <span class="resume__view__span">
+                    {% if checked_skills_count != 0 %}
+                    Проверенные навыки:
+                        {% for skill in checked_skills.all%}
+                            {{skill}}
+                        {% endfor %}
+                    {% else %}
+                        Проверенных навыков пока нет
+                    {% endif %}
+                </span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/contact_icon.svg"class="resume__view__img">
+                <span class="resume__view__span">{{resume.phone}}</span>
+            </div>
+            <div class="resume__view__div">
+                <img src="../../static/my_hh_app/images/salary_icon.svg"class="resume__view__img">
+                <span class="resume__view__span">{{resume.salary}}</span>
+            </div>
+        </div>
+    </div>
+  </section>
 {% endblock %}
 </body>
 </html>

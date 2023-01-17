@@ -89,6 +89,7 @@ def resume_view(request, pk):
     resume = Resume.objects.get(id=pk)
     checked_skills = UserCheckedSkills.objects.get(user=resume.author)
     context = {"resume": resume, "checked_skills": checked_skills}
+    context["checked_skills_count"] = len(checked_skills.skills_id.all())
     cure_user = request.user
     cure_user_status = UserStatus.objects.get(user=cure_user).status
     if cure_user_status == "candidate":
@@ -127,6 +128,8 @@ def vacancy_view(request, id, is_own):
                 vacancy_form.resume_id = Resume.objects.get(id=request.POST["resumes"])
                 vacancy_form.author_vacancy_name = vacancy.author
                 vacancy_form.save()
+                #надо  бы добавить страницу в стиле резюме отправлено. МБ потом добавлю.
+                return(redirect("http://127.0.0.1:8000/"))
         form = ResponsesForm(cure_user)
         context["vacancy"]= vacancy
         context["form"]= form
