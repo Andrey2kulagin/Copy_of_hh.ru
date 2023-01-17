@@ -1,41 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% extends 'my_hh_app/base.html' %}
+{% block title%}
+    <title>Личный кабинет</title>
+{% endblock %}
+<body>
+
 {% block content %}
-{{cure_user_status}}
-{% if cure_user_status == "employer" %}
-<form method="post">
+
+
+<section class="employer__lk">
+  <div class="lk__header">Личный кабинет </div>
+  {% if cure_user_status == "employer" %}
+<form class = "proform"method="post">
   {% csrf_token %}
-  <button type="submit">
+  <button  class="subscribe__top__btn" type="submit">
     Получить "ПРО" подписку
   </button>
 </form>
+{% else %}
+<span class="subscribe__top__span">Поздравляем! У вас подписка ПРО </span>
 {% endif %}
-<h3>Информация о компании:</h3><br>
-{{company_info.company_name}}<br>
-{{company_info.foundation_data}}<br>
-{{company_info.industry}}<br>
-{{company_info.strategy_description}}<br>
-<button type="submit"><a href="{{company_info.id}}/change_company_info">Изменить информацию о своей компании</a></button>
-<h3>Отклики на мои вакансии</h3>
-<ul>
-{% for response in responses %}
-    <li><a href="http://127.0.0.1:8000/resume_view/{{response.resume_id.id}}">Резюме{{response}}</a>
-        <br><a href="http://127.0.0.1:8000/vacancy_view/{{response.vacancy_id.id}}/1">Вакансия{{response.vacancy_id}}
-        <br></a><p>{{response.cover_letter}}</p></li>
-{% endfor %}
-    </ul>
-<h3>Мои вакансии</h3>
-{% for vacancy in vacancies %}
-    <li><a href="http://127.0.0.1:8000/vacancy_view/{{vacancy.id}}/1">{{vacancy}}</a></li>
-{% endfor %}
-<button><a href="send_vacation">Добавить вакансию</a></button>
+  <div class="company__info">
+    <div class="login__div">
+      <p class=employer__lk__p>О вашей компании</p>
+      <div class="company__info__small">
+          <div>{{company_info.company_name}}</div>
+      </div>
+      <div class="company__info__small">
+          <div>Основана {{company_info.foundation_data}}</div>
+      </div>
+      <div class="company__info__small">
+          <div>Отрасль: {{company_info.industry}}</div>
+      </div>
+      <div class="company__info__big">
+          <div>Стратегия:{{company_info.strategy_description}}</div>
+      </div>
+      <a href="{{company_info.id}}/change_company_info" class="login__btn">
+        <p class="login__btn__p">Редактировать</p>
+      </a>
+    </div>
+    
+    <div class="login__div">
+      <p class=employer__lk__p>Мои вакансии</p>
+      {% for vacancy in vacancies %}
+      <div class="company__info__small">
+        <a class="company__info__small__a" href="http://127.0.0.1:8000/vacancy_view/{{vacancy.id}}/1">{{vacancy}}</a>
+      </div>
+      {% endfor %}
+      <a href="#" class="login__btn__add__vacancy">
+        <p class="login__btn__p">Добавить вакансию</p>
+      </a>
+    </div>
+  </div>
+  </div>
+</section>
 
+
+<section class="your__responses">
+  <div class="responses__title">Отклики на ваши вакансии</div>
+  {% for response in responses %}
+  <div class="responses__card">
+    <div class="response__card__div__1">
+      <a class="response__vacancy__name" href="/vacancy_view/{{response.vacancy_id.id}}/0">Вакансия: {{response.vacancy_id}}</a>
+      <a class="response__resume__name" href="http://127.0.0.1:8000/resume_view/{{response.resume_id.id}}"> Резюме: {{response}}</a>
+    </div>
+    <div class="response__card__div__2">
+      <span class="response__card__div__2__span">Сопроводительное письмо:</span> {{response.cover_letter}} 
+    </div>
+   
+  </div>
+  {% endfor %}
+</section>
 
 {% endblock %}
 </body>

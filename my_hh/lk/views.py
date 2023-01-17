@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.apps import apps
 from .forms import VacanciesForm, TestForm
 from django.views.generic import UpdateView
+from my_hh_app.forms import ResumeForm
 
 Resume = apps.get_model('my_hh_app', 'Resume')
 UserStatus = apps.get_model('my_hh_app', 'UserStatus')
@@ -51,21 +52,23 @@ def resume_view(request, pk):
     return render(request, "lk/resume_view.html", context)
 
 
-class NewUpdateView(UpdateView):
-    model = Resume
-    template_name = "my_hh_app/send_resume.html"
-    fields = ["name",
-              "gender",
-              "phone",
-              "age",
-              "spec",
-              "type_of_employment",
-              "adres",
-              "experience",
-              "skills",
-              "salary"
-              ]
-    success_url = "http://127.0.0.1:8000/lk"
+def resume_update(request, pk):
+    resume = Resume.objects.get(id=pk)
+    if request.method == "POST":
+        form = ResumeForm(instance=resume,data=request.POST)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.save()
+            form.save_m2m()
+            return redirect("http://127.0.0.1:8000/lk/")
+        else:
+            context = {"error":form.errors}
+            return render(request, "my_hh_app/send_resume.html", context)
+    form = ResumeForm(instance=resume)
+    context = {"form": form}
+    return render(request, "my_hh_app/send_resume.html", context)
+
 
 
 class CompanyUpdate(UpdateView):

@@ -35,7 +35,6 @@ class Resume(models.Model):
     salary = models.CharField("salary", max_length=200)
     adres = models.CharField("adres", max_length=200)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-
     def __str__(self):
         return self.spec
 

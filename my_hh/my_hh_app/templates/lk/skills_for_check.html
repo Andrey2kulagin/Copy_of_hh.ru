@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% extends 'my_hh_app/base.html' %}
+{% block title %}
+<title>Навыки для подтверждения</title>
+{% endblock %}
 {% block content %}
+<section">
 {% if skills_without_checked != "0" %}
-{% for el in skills_without_checked %}
-<h5>{{el}}</h5>
-<button><a href="check_skill/{{el}}">Подтвердить навык</a></button>
+{% for skill in skills_without_checked %}
+<div class="skills__view">
+    <span class="skills__view__span">{{skill}}</span>
+    <a href="check_skill/{{skill}}" class="skills__view__btn">Потдвердить</a>
+  </div>
 {% endfor %}
 {% else %}
-<h1>Поздравляем, вы подтвердили все возможные навыки, скоро мы сделаем новые тесты!</h1>
-{% endif %}
+  <div class="congratulate_div">
+    <p class="skills__view__congratulate">Позравляем!</p>
+    <p class="skills__view__congratulate">Вы подтвердили все возможные навыки!</p>
+    <p class="skills__view__congratulate"> Скоро мы добавим новые тесты</p>
+  </div>
+  {% endif %}
+  </section>
 {% endblock %}
-</body>
-</html>
