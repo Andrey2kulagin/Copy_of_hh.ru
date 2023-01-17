@@ -36,16 +36,17 @@ class ResumeForm(forms.ModelForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    username = forms.CharField(max_length=200, label='Username', help_text="")
+    username = forms.CharField(max_length=200,
+     label='Username', 
+     help_text="",
+     widget=forms.TextInput(attrs={"autocomplete": "username", "class": "username__input", "placeholder" : "Введите имя пользователя" }))
+    first_name = forms.CharField(widget = forms.TextInput(attrs={"autocomplete":"name", "class": "name__input", "placeholder" : "Как к вам можно обращаться?"}))
+    email = forms.EmailField(widget = forms.TextInput(attrs={"autocomplete":"email", "class": "email__input", "placeholder" : "Введите email"}))
     password1 = forms.CharField(
-        label="Password",
-        strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "class": "password__input", "placeholder" : "Введите пароль"}),
     )
     password2 = forms.CharField(
-        label="Password",
-        strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "class": "password__input", "placeholder" : "Введите пароль ещё раз"}),
     )
 
     class Meta:

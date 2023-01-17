@@ -1,23 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% extends 'my_hh_app/base.html' %}
+{% block title %}
+    <title>Регистрация</title>
+{% endblock %}
+{%block content%}
 <body>
-{{post}}
-<form method="post">
-    {{user}}
-    {% csrf_token %}
-    {{form}}
-    {% if is_valid == False %}
-    <br><h3>Проверьте соответствие введенных данных критериям</h3>
-    {% endif %}
-    <br>
-    <button type="submit">Зарегистрироваться </button>
-</form>
-{{req}}
-<br>
+  {% if is_valid == False %}
+            Проверьте соответствие введенных данных критериям<br>
+            errors{{errors}}
+        {% endif %}
+<section>
+    <div class="login__div">
+      <p class=login__p>Регистрация</p>
+      <form method="post" class="login__form">
+       
+        {% csrf_token %}
+        <div class="all__input__div">
+            <div class="reg__input__div">{{form.username}}</div>
+            <div class="reg__input__div">{{form.first_name}}</div>
+            <div class="reg__input__div">{{form.email}}</div>
+            <div class="reg__input__div">{{form.password1}}</div>
+            <div class="reg__input__div">{{form.password2}}</div>
+        </div>
+        <button class="login__btn"><p class="login__btn__p">Регистрация</p></button>
+      </form>
+      
+    </div>
+
+  </section>
 
 </body>
-</html>
+{% endblock %}

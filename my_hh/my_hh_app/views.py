@@ -48,6 +48,7 @@ def send_resume(request):
 
 
 def registrations(request, int_status):
+    context = {}
     user_status_form = UserStatusForm()
     is_valid = True
     reg = RegistrationForm()
@@ -78,9 +79,12 @@ def registrations(request, int_status):
             return_path = "http://127.0.0.1:8000/"
             return redirect(return_path)
         else:
+            context["errors"]=form.errors   
             is_valid = False
     form = UserRegistrationForm()
-    context = {"form": form, "is_valid": is_valid, "reg": reg, "user_status_form": user_status_form, "post": post}
+    context["form"]= form
+    context["is_valid"]= is_valid
+    context["user_status_form"] = user_status_form
     return render(request, "my_hh_app/registrations.html", context)
 
 

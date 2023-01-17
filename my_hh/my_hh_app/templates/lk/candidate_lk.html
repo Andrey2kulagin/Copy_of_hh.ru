@@ -1,32 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% extends 'my_hh_app/base.html' %}
+{% block title %}
+    <title>Личный кабинет</title>
+{% endblock %}
+<body>
+
 {% block content %}
-<h1> LK </h1>
 
-<button> <a href="http://127.0.0.1:8000/send_resume">Добавить резюме</a></button>
-<h1>Мои резюме</h1>
-{% for resume in author_resumes %}
-
-<a href="resume_view/{{resume.id}}">{{resume.spec}}</a><br>
-{% endfor %}
-
-<button> <a href="">Внести изменения в резюме</a></button>
-
-<h1>Мои подтверждённые навыки</h1>
-{% if checked_skills == 0 %}
-<h3>У вас пока нет подтверждённых навыков</h3>
-{% else %}
-    {% for checked_skill in checked_skills.all %}
-        <h5>{{checked_skill}}</h5>
-    {% endfor %}
-{%endif %}
-<button><a href="skills_for_check">Подтвердить навыки</a></button>
+<section class="employer__lk">
+    <div class="lk__header">Личный кабинет </div>
+    <div class="company__info">
+      <div class="login__div">
+        <p class=employer__lk__p>Мои резюме</p>
+        {% for resume in author_resumes %}
+        <div class="company__info__small">
+            <a class="company__info__small__a" href="resume_view/{{resume.id}}">{{resume.spec}}</a>
+        </div>
+        {% endfor %}
+        <a href="#" class="login__btn__add__vacancy">
+          <p class="login__btn__p">Добавить резюме</p>
+        </a>
+      </div>   
+      <div class="login__div">
+        <p class=employer__lk__p>Мои подтверждённые навыки</p>
+        {% if checked_skills == 0 %}
+        <span class="skills__view__congratulate">У вас пока нет подтверждённых навыков</span>
+      {% else %}
+          {% for checked_skill in checked_skills.all %}
+          <div class="company__info__small">
+              <span class="company__info__small__a" href="resume_view/{{resume.id}}">{{checked_skill}}</a>
+          </div>
+          {% endfor %}
+      {%endif %}
+        <a href="#" class="login__btn__add__vacancy">
+          <p class="login__btn__p">Подтвердить навыки</p>
+        </a>
+      </div>
+    </div>
+    </div>
+  </section>
 {% endblock %}
 </body>
 </html>
