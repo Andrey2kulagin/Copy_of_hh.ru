@@ -145,6 +145,5 @@ class BookAdmin(admin.ModelAdmin):
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
     list_display = ("profile_id", "date_time", "user_name", "rating")
-
     def has_add_permission(self, request):
         return False

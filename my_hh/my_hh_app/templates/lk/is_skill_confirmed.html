@@ -1,14 +1,24 @@
 {% extends 'my_hh_app/base.html' %}
-
-<body>
-{% block content %}
-{% if is_confirmed == 1 %}
-  <h1>Навык подтверждён</h1>
-{% else %}
-  <h1>Навык не подтверждён</h1>
-{% endif %}
-<p>Ваш балл: {{points}}</p>
-<p>Минимальный балл: {{minimal_level}}</p>
-<a href="http://127.0.0.1:8000/lk/">Вернуться в Личный кабинет</a>
+{% block title %}
+<title>Результат теста</title>
 {% endblock %}
+
+
+  {% block content %}
+  <body>
+<section class="congratulate__section">
+  <div class="congratulate_div">
+    {% if is_confirmed == 1 %}
+      <p class="skills__result__congratulate">Позравляем! Навык подтверждён!</p>
+    {% else %}
+    <p class="skills__result__congratulate">Навык не подтверждён, попробуйте ещё раз</p>
+    {% endif %}
+    <p class="skills__view__congratulate">Ваши баллы: {{points}}</p>
+    <p class="skills__view__congratulate"> Минимальный балл: {{minimal_level}}</p>
+    <a href="http://127.0.0.1:8000/lk/skills_for_check" class="save__resume__btn">
+      <p class="login__btn__p">Вернуться назад</p>
+    </a>
+  </div>
+</section>
 </body>
+{% endblock %}
